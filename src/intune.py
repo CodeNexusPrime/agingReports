@@ -2,6 +2,7 @@ from secrets import CLIENT_ID, CLIENT_SECRET, NONPROFIT_TENANT_ID, AUTHORITY, SC
 import msal
 import requests
 import pandas
+import os
 
 # Specify columns to remove if needed. For example:
 COLUMNS_TO_REMOVE = [
@@ -168,8 +169,8 @@ def Filter_Devices(dataframe, devicePrefixes=None, emailDomains=None, COLUMNS_TO
     
     return dataframe_filtered
     
-def Export_Devices(dataframe, devicePrefixes=None, emailDomains=None):
-    base_filename = "intune_computers"
+def Export_Devices(dataframe,reportsDir, devicePrefixes=None, emailDomains=None):
+    base_filename = os.path.join(reportsDir, "intune_computers")
     if devicePrefixes:
         base_filename += "_" + "_".join(devicePrefixes)
     if emailDomains:
