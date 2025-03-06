@@ -16,13 +16,11 @@ def main ():
     devices = intune.Fetch_Devices(headers=headers)
     intune.Count_Devices(devices=devices)
     
-    breakdownFile = files.Access_BreakDown_CSV("breakdowns.csv")
-    files.Read_BreakDowns(breakdownFile)
-    
-        
-        
     dataframe = intune.Convert_List_To_DataFrame(devices=devices)
-    dataframe = intune.Filter_Devices(dataframe=dataframe, devicePrefixes=)
+    
+    breakdownFile = files.Access_BreakDown_CSV("breakdowns.csv")
+    files.Read_BreakDowns(breakdownFile, dataframe)
+    
 
 if __name__ == "__main__":
     main()

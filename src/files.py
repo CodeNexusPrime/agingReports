@@ -27,5 +27,7 @@ def Read_BreakDowns(filename:str,dataframe):
             #location,prefixes,domains
             dataframe_filtered = intune.Filter_Devices(dataframe=dataframe,devicePrefixes=row["prefixes"],emailDomains=row["domains"])
             
+            intune.Export_Devices(dataframe=dataframe_filtered, reportsDir=reportsDir,devicePrefixes=row["prefixes"], emailDomains=row["domains"])
+            
             
     
