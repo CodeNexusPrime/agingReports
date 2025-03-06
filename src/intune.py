@@ -162,7 +162,9 @@ def Filter_Devices(dataframe, devicePrefixes=None, emailDomains=None, COLUMNS_TO
         else:
             print("Column 'emailAddress' not found; skipping email domain filtering.")
     
-    dataframe_filtered = Drop_Columns(dataframe_filtered, COLUMNS_TO_REMOVE)
+    dataframe_filtered = Drop_Columns(dataframe=dataframe_filtered, COLUMNS_TO_REMOVE=COLUMNS_TO_REMOVE)
+    dataframe_filtered = Add_Department_Column(dataframe=dataframe_filtered)
+    dataframe_filtered = Add_WarrantyInfo_Column(dataframe=dataframe_filtered)
     
     return dataframe_filtered
     
