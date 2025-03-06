@@ -1,5 +1,9 @@
-from secrets import CLIENT_ID, CLIENT_SECRET, NONPROFIT_TENANT_ID, AUTHORITY, SCOPE
-import msal
-import requests
+import intune
+import dell
 import pandas
 
+def main ():
+    pass
+
+if __name__ == "__main__":
+    main()
