@@ -2,7 +2,7 @@ import intune
 import dell
 import files
 import pandas
-import csv
+
 
 def main ():
     app = intune.Create_Client_Application_Instance()
@@ -17,6 +17,7 @@ def main ():
     intune.Count_Devices(devices=devices)
     
     breakdownFile = files.Access_BreakDown_CSV("breakdowns.csv")
+    files.Read_BreakDowns(breakdownFile)
     
         
         
