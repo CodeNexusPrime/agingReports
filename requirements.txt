@@ -1,3 +1,5 @@
 msal
 requests
 pandas
+numpy
+randbits

@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
 import intune
 import dell
 import files
-import pandas
 
 
 def main ():

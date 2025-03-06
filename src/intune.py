@@ -1,4 +1,4 @@
-from secrets import CLIENT_ID, CLIENT_SECRET, NONPROFIT_TENANT_ID, AUTHORITY, SCOPE
+from secretInformation import CLIENT_ID, CLIENT_SECRET, NONPROFIT_TENANT_ID, AUTHORITY, SCOPE
 import msal
 import requests
 import pandas
@@ -67,7 +67,7 @@ def Create_Token(app):
 def Test_Token(token_response):
     if "access_token" not in token_response:
         print("Could not acquire token. Check your client credentials and permissions.")
-    exit()
+        exit()
 
 def Create_Access(token_response):
     access_token = token_response["access_token"]
