@@ -5,9 +5,9 @@ import pandas
 
 def Access_BreakDown_CSV(filename:str):
     currentDir = os.getcwd()
-    parentDir = os.path.dirname(currentDir)
+    #parentDir = os.path.dirname(currentDir)
     
-    breakdownFile = os.path.join(parentDir, filename)
+    breakdownFile = os.path.join(currentDir, filename)
     return breakdownFile
 
 def Create_Reports_Directory():
@@ -15,8 +15,8 @@ def Create_Reports_Directory():
     parentDir = os.path.dirname(currentDir)
     reportsDir = os.path.join(parentDir, "reports")
     
-    if not reportsDir.exists():
-        reportsDir.mkdir()
+    if not os.path.exists(reportsDir):
+        os.mkdir(reportsDir)
     return reportsDir
 
 def Read_BreakDowns(filename:str,dataframe):
