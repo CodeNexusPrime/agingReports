@@ -3,3 +3,4 @@ venv
 __pycache__
 breakdowns.csv
 secretInformation.py
+.DS_Store
