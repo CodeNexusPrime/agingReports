@@ -3,3 +3,4 @@ venv
 __pycache__
 breakdowns.csv
 .DS_Store
+reports/*

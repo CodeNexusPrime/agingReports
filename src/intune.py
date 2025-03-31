@@ -3,6 +3,7 @@ import msal
 import requests
 import pandas
 import os
+import logging
 
 # Specify columns to remove if needed. For example:
 COLUMNS_TO_REMOVE = [
@@ -172,9 +173,13 @@ def Filter_Devices(dataframe, devicePrefixes=None, emailDomains=None, COLUMNS_TO
 def Export_Devices(dataframe,reportsDir, devicePrefixes=None, emailDomains=None):
     base_filename = os.path.join(reportsDir, "intune_computers")
     if devicePrefixes:
-        base_filename += "_" + "_".join(devicePrefixes)
+        prefixes = ''.join(devicePrefixes)
+        prefixes = prefixes.split(' ')
+        base_filename += "_" + "_".join(prefixes)
     if emailDomains:
-        base_filename += "_" + "_".join(emailDomains)
+        domains = ''.join(emailDomains)
+        domains = domains.split(' ')
+        base_filename += "_" + "_".join(domains)
     base_filename += ".xlsx"
     
     dataframe.to_excel(base_filename, index=False)
