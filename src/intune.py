@@ -1,4 +1,5 @@
 from secretInformation import CLIENT_ID, CLIENT_SECRET, NONPROFIT_TENANT_ID, AUTHORITY, SCOPE
+from logs import Logger
 import msal
 import requests
 import pandas
@@ -51,6 +52,7 @@ COLUMNS_TO_REMOVE = [
     "deviceActionResults"
     ]  # Update with actual column names you wish to remove.
 
+log_instance = Logger().get_logger()
 
 def Create_Client_Application_Instance():
     app = msal.ConfidentialClientApplication(
@@ -58,19 +60,24 @@ def Create_Client_Application_Instance():
     authority=AUTHORITY,
     client_credential=CLIENT_SECRET
     )
+    log_instance.debug("App created successfully.")
     return app
 
 def Create_Token(app):
     token_response = app.acquire_token_for_client(scopes=SCOPE)
+    log_instance.debug("Access Token Created.")
     return token_response
 
 def Test_Token(token_response):
     if "access_token" not in token_response:
-        print("Could not acquire token. Check your client credentials and permissions.")
+        log_instance.critical("Could not acquire token. Check your client credentials and permissions.")
+        # print("Could not acquire token. Check your client credentials and permissions.")
         exit()
+    log_instance.debug("Token worked during test.")
 
 def Create_Access(token_response):
     access_token = token_response["access_token"]
+    log_instance.debug("Access Token created successfully.")
     return access_token
 
 def Create_Headers(access_token):
@@ -80,44 +87,54 @@ def Create_Headers(access_token):
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9'
     }
+    log_instance.debug("Headers created successfully.")
     return headers
 
 def Fetch_Devices(headers):
     devices = []
     endpoint = "https://graph.microsoft.com/v1.0/deviceManagement/managedDevices"
-    print("Fetching devices from Intune...")
+    log_instance.info("Fetching devices from Intune")
+    # print("Fetching devices from Intune...")
     
     while endpoint:
         response = requests.get(endpoint, headers=headers)
         if response.status_code == 200:
+            log_instance.debug("During Fetching devices reponse was 200.")
             data = response.json()
             devices.extend(data.get("value", []))
             # Check if there is a nextLink for pagination.
+            log_instance.debug("Checking if there is a nextLink for pagination.")
             endpoint = data.get("@odata.nextLink")
         else:
-            print("Error fetching data:", response.status_code, response.text)
+            log_instance.error("Error fetching data:", response.status_code, response.text)
+            # print("Error fetching data:", response.status_code, response.text)
             break
     
     return devices
 
 def Count_Devices(devices):
-    print(f"Total devices retrieved: {len(devices)}")
+    log_instance.info(f"Total devices retrieved: {len(devices)}")
+    # print(f"Total devices retrieved: {len(devices)}")
 
 def Convert_List_To_DataFrame(devices):
     dataframe = pandas.DataFrame(devices)
+    log_instance.debug("Dataframe successfully created from the device list.")
     return dataframe
 
 def Drop_Columns(dataframe, COLUMNS_TO_REMOVE=COLUMNS_TO_REMOVE):
     if COLUMNS_TO_REMOVE:
+        log_instance.debug("Removing unneeded columns. In function intune.Drop_Columns().")
         dataframe= dataframe.drop(columns=COLUMNS_TO_REMOVE, errors="ignore")
     return dataframe
 
 def Add_Department_Column(dataframe):
     dataframe["department"] = ""
+    log_instance.debug("Adding the department column.")
     return dataframe
 
 def Add_WarrantyInfo_Column(dataframe):
     dataframe["warrantyInfo"] = ""
+    log_instance.debug("Adding the warrantyInfo column.")
     return dataframe
     
 
