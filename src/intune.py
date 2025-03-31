@@ -159,26 +159,32 @@ def Filter_Devices(dataframe, devicePrefixes=None, emailDomains=None, COLUMNS_TO
         dataframe_filtered = dataframe[dataframe['operatingSystem'].str.contains("Windows", case=False, na=False)]
         if "managedDeviceOwnerType" in dataframe.columns:
             dataframe_filtered = dataframe_filtered[dataframe_filtered['managedDeviceOwnerType'].str.contains("company", case=False, na=False)]
-        print(f"Filtered to {len(dataframe_filtered)} Windows company devices.")
+        log_instance.info(f"Filtered to {len(dataframe_filtered)} Windows company devices.")
+        # print(f"Filtered to {len(dataframe_filtered)} Windows company devices.")
     else:
         dataframe_filtered = dataframe
-        print("No 'operatingSystem' field found; using all devices.")
+        log_instance.info("No 'operatingSystem' field found; using all devices.")
+        # print("No 'operatingSystem' field found; using all devices.")
     
     if devicePrefixes:
         if "deviceName" in dataframe_filtered:
             # Use tuple() so we can pass multiple prefixes to startswith.
             dataframe_filtered = dataframe_filtered[dataframe_filtered['deviceName'].str.startswith(tuple(devicePrefixes), na=False)]
-            print(f"After filtering for device prefixes {devicePrefixes}, {len(dataframe_filtered)} devices remain.")
+            log_instance.info(f"After filtering for device prefixes {devicePrefixes}, {len(dataframe_filtered)} devices remain.")
+            # print(f"After filtering for device prefixes {devicePrefixes}, {len(dataframe_filtered)} devices remain.")
         else:
-            print("Column 'deviceName' not found; skipping device prefix filtering.")
+            log_instance.info("Column 'deviceName' not found; skipping device prefix filtering.")
+            # print("Column 'deviceName' not found; skipping device prefix filtering.")
     
     if emailDomains:
         if "emailAddress" in dataframe_filtered.columns:
             # Use tuple() so we can pass multiple prefixes to startswith.
             dataframe_filtered = dataframe_filtered[dataframe_filtered['emailAddress'].str.endswith(tuple(emailDomains), na=False)]
-            print(f"After filtering for email domains {emailDomains}, {len(dataframe_filtered)} devices remain.")
+            log_instance.info(f"After filtering for email domains {emailDomains}, {len(dataframe_filtered)} devices remain.")
+            # print(f"After filtering for email domains {emailDomains}, {len(dataframe_filtered)} devices remain.")
         else:
-            print("Column 'emailAddress' not found; skipping email domain filtering.")
+            log_instance.info("Column 'emailAddress' not found; skipping email domain filtering.")
+            # print("Column 'emailAddress' not found; skipping email domain filtering.")
     
     dataframe_filtered = Drop_Columns(dataframe=dataframe_filtered, COLUMNS_TO_REMOVE=COLUMNS_TO_REMOVE)
     dataframe_filtered = Add_Department_Column(dataframe=dataframe_filtered)
@@ -199,5 +205,6 @@ def Export_Devices(dataframe,reportsDir, devicePrefixes=None, emailDomains=None)
     base_filename += ".xlsx"
     
     dataframe.to_excel(base_filename, index=False)
-    print(f"Excel file '{base_filename}' created successfully.")
+    log_instance.info(f"Excel file '{base_filename}' created successfully.")
+    # print(f"Excel file '{base_filename}' created successfully.")
 
