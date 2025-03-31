@@ -3,7 +3,6 @@ import msal
 import requests
 import pandas
 import os
-import logging
 
 # Specify columns to remove if needed. For example:
 COLUMNS_TO_REMOVE = [
