@@ -12,8 +12,8 @@ def Access_BreakDown_CSV(filename:str):
 
 def Create_Reports_Directory():
     currentDir = os.getcwd()
-    parentDir = os.path.dirname(currentDir)
-    reportsDir = os.path.join(parentDir, "reports")
+    #parentDir = os.path.dirname(currentDir)
+    reportsDir = os.path.join(currentDir, "reports")
     
     if not os.path.exists(reportsDir):
         os.mkdir(reportsDir)
