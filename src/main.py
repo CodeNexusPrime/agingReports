@@ -7,7 +7,6 @@ from logs import Logger
 
 def main ():
     log_instance = Logger().get_logger()
-    print(type(log_instance))
     log_instance.info("Starting the program")
     
     log_instance.info("Creating my application instance using intune.Create_Client_Application_Instance")

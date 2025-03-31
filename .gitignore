@@ -4,3 +4,4 @@ __pycache__
 breakdowns.csv
 .DS_Store
 reports/*
+app.log
