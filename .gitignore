@@ -5,3 +5,4 @@ breakdowns.csv
 .DS_Store
 reports/*
 app.log
+.cache_*
